@@ -5,4 +5,5 @@ export class CreateUserDto {
   password: string;
   mobile_num?: string;
   carplate?: string;
+  membership_id: number;
 }

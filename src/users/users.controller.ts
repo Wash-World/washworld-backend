@@ -8,20 +8,23 @@ import { User } from './entities/user.entity';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  // POST /users
+  /**
+   * POST /users
+   */
   @Post()
   async create(@Body() dto: CreateUserDto): Promise<Omit<User, 'password'>> {
     const user = await this.usersService.create(dto);
     // Strip out password before returning
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...result } = user;
-    return result;
+    const { password, ...rest } = user;
+    return rest;
   }
 
-  // GET /users (for quick sanity-check)
+  /**
+   * GET /users
+   */
   @Get()
-  async findAll(): Promise<Omit<User, 'password'>[]> {
-    const users = await this.usersService.findAll();
-    return users.map(({ password, ...rest }) => rest);
+  findAll(): Promise<Omit<User, 'password'>[]> {
+    return this.usersService.findAll();
   }
 }

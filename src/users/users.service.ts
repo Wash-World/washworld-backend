@@ -1,9 +1,10 @@
 // src/users/users.service.ts
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from './entities/user.entity';
+import { Membership } from '../memberships/entities/membership.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
@@ -11,24 +12,44 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepo: Repository<User>,
+
+    @InjectRepository(Membership)
+    private readonly membershipsRepo: Repository<Membership>,
   ) {}
 
+  /**
+   * Create a new user with a membership.
+   */
   async create(dto: CreateUserDto): Promise<User> {
-    // 1) Hash the password
-    const hashedPassword = await bcrypt.hash(dto.password, 10);
-
-    // 2) Create entity instance
-    const user = this.usersRepo.create({
-      ...dto,
-      password: hashedPassword,
+    // 1) Lookup the selected membership
+    const membership = await this.membershipsRepo.findOne({
+      where: { membership_id: dto.membership_id },
     });
+    if (!membership) {
+      throw new NotFoundException('Membership plan not found');
+    }
 
-    // 3) Save to DB
+    // 2) Hash the password
+    const hashed = await bcrypt.hash(dto.password, 10);
+
+    // 3) Create & save the user
+    const user = this.usersRepo.create({
+      name: dto.name,
+      lastname: dto.lastname,
+      email: dto.email,
+      password: hashed,
+      mobile_num: dto.mobile_num,
+      carplate: dto.carplate,
+      membership, // ← attach the Membership entity
+    });
     return this.usersRepo.save(user);
   }
 
-  // Optional helper to list users
-  findAll(): Promise<User[]> {
-    return this.usersRepo.find();
+  /**
+   * List all users (without their password field).
+   */
+  async findAll(): Promise<Omit<User, 'password'>[]> {
+    const users = await this.usersRepo.find();
+    return users.map(({ password, ...rest }) => rest);
   }
 }
