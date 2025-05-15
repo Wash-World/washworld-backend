@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
+import { MembershipsModule } from './memberships/memberships.module';
+import { ServicesModule } from './services/services.module';
 
 @Module({
   imports: [
@@ -28,6 +30,8 @@ import { UsersModule } from './users/users.module';
 
     // Your feature modules here
     UsersModule,
+    MembershipsModule,
+    ServicesModule,
   ],
 })
 export class AppModule {}
