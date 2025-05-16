@@ -31,16 +31,18 @@ export class Membership {
   @Column({ type: 'int' })
   duration_wash: number; // minutes the wash lasts
 
-  @ManyToMany(() => Service, { eager: true })
+  @ManyToMany(() => Service, { eager: true }) //eager: true loads the membership automatically when you fetch a user.
   @JoinTable({
-    name: 'membership_service',
+    name: 'membership_service', // Name of the join table in the database
+    // Defines how this side (Membership) maps into the join table
     joinColumn: {
-      name: 'membership_id',
-      referencedColumnName: 'membership_id',
+      name: 'membership_id', // column in membership_service
+      referencedColumnName: 'membership_id', // PK in memberships table
     },
+    // Defines how the other side (Service) maps into the join table
     inverseJoinColumn: {
-      name: 'service_id',
-      referencedColumnName: 'service_id',
+      name: 'service_id', // column in membership_service
+      referencedColumnName: 'service_id', // PK in services table
     },
   })
   services: Service[];
