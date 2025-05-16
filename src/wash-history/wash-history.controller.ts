@@ -9,7 +9,8 @@ export class WashHistoryController {
 
   /** POST /washes */
   @Post()
-  create(@Body() dto: CreateWashHistoryDto): Promise<WashHistory> {
+  async create(@Body() dto: CreateWashHistoryDto): Promise<WashHistory> {
+    console.log('🛠  create WashHistory DTO:', dto);
     return this.svc.create(dto);
   }
 

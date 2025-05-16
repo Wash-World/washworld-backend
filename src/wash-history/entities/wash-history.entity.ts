@@ -5,8 +5,10 @@ import {
   ManyToOne,
   CreateDateColumn,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { Feedback } from '../../feedbacks/entities/feedback.entity';
 
 @Entity('washes_history')
 export class WashHistory {
@@ -25,4 +27,7 @@ export class WashHistory {
   /** Timestamp when the record was created */
   @CreateDateColumn({ type: 'timestamp' })
   timestamp: Date;
+
+  @OneToMany(() => Feedback, (fb) => fb.washHistory, { cascade: true })
+  feedbacks: Feedback[];
 }
