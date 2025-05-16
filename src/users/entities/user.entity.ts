@@ -33,6 +33,16 @@ export class User {
   @Column({ nullable: true })
   carplate: string;
 
+  @Column({ nullable: true })
+  assigned_location_api_id?: string;
+
+  @Column({ default: false })
+  all_locations: boolean;
+
+  // @ManyToOne(() => PaymentInfo, { nullable: true, eager: true })
+  // @JoinColumn({ name: 'payment_info_id' })
+  // payment_info?: PaymentInfo;
+
   // ← new relation to Membership
   @ManyToOne(() => Membership, { eager: true }) //eager: true loads the membership automatically when you fetch a user.
   @JoinColumn({ name: 'membership_id' }) //The membership_id foreign-key column is created for you.

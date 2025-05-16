@@ -40,7 +40,9 @@ export class UsersService {
       password: hashed,
       mobile_num: dto.mobile_num,
       carplate: dto.carplate,
-      membership, // ← attach the Membership entity
+      membership,
+      assigned_location_api_id: dto.assigned_location_api_id,
+      all_locations: dto.all_locations,
     });
     return this.usersRepo.save(user);
   }

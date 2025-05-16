@@ -39,6 +39,15 @@ export class CreateUserDto {
   @IsNotEmpty()
   membership_id: number;
 
+  //@ValidateIf(o => !o.all_locations)
+  // @IsString()
+  // @IsNotEmpty()
+  // assigned_location_api_id?: string;
+
+  // @ValidateIf(o => !o.assigned_location_api_id)
+  // @IsBoolean()
+  //all_locations?: boolean;
+
   @IsString()
   @IsOptional()
   assigned_location_api_id?: string;
