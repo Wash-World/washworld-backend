@@ -1,3 +1,4 @@
+// src/memberships/memberships.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
@@ -16,16 +17,21 @@ export class MembershipsService {
   ) {}
 
   async create(dto: CreateMembershipDto): Promise<Membership> {
-    // 1) Fetch the requested services
-    const services = await this.servicesRepo.find({
-      where: { service_id: In(dto.serviceIds) },
-    });
+    let services: Service[] = [];
 
-    if (services.length !== dto.serviceIds.length) {
-      throw new NotFoundException('One or more services not found');
+    // Only fetch services if the DTO provided any IDs
+    if (dto.serviceIds && dto.serviceIds.length) {
+      services = await this.servicesRepo.find({
+        where: { service_id: In(dto.serviceIds) },
+      });
+
+      // If any ID didn’t match, throw
+      if (services.length !== dto.serviceIds.length) {
+        throw new NotFoundException('One or more services not found');
+      }
     }
 
-    // 2) Create & save the membership with its services
+    // Create & save—`services` will be an empty array if none provided
     const membership = this.membershipsRepo.create({
       plan: dto.plan,
       price: dto.price,

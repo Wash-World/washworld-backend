@@ -1,15 +1,28 @@
-import { IsInt, IsString, IsOptional } from 'class-validator';
+import {
+  IsNumber,
+  IsNotEmpty,
+  IsString,
+  IsOptional,
+  Min,
+  Max,
+} from 'class-validator';
+
 export class CreateFeedbackDto {
-  @IsInt()
+  @IsNumber()
+  @IsNotEmpty()
   wash_history_id: number;
 
-  @IsInt()
+  @IsNumber()
+  @Min(1)
+  @Max(5)
+  @IsNotEmpty()
   rating: number;
 
   @IsString()
+  @IsNotEmpty()
   comment: string;
 
-  @IsOptional()
   @IsString()
+  @IsOptional()
   photo?: string;
 }
