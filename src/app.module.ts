@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { MembershipsModule } from './memberships/memberships.module';
 import { ServicesModule } from './services/services.module';
 import { FavouritesModule } from './favourites/favourites.module';
+import { WashHistoryModule } from './wash-history/wash-history.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { FavouritesModule } from './favourites/favourites.module';
     MembershipsModule,
     ServicesModule,
     FavouritesModule,
+    WashHistoryModule,
   ],
 })
 export class AppModule {}

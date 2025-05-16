@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Membership } from '../../memberships/entities/membership.entity';
 import { Favourite } from '../../favourites/entities/favourite.entity';
+import { WashHistory } from 'src/wash-history/entities/wash-history.entity';
 
 @Entity('users')
 export class User {
@@ -41,4 +42,7 @@ export class User {
   //you can fill in an array of the related Favourite rows from favourite_locations.”
   @OneToMany(() => Favourite, (fav) => fav.user, { cascade: true }) // lets you save new Favourite objects by pushing them into user.favourites and calling save(user).
   favourites: Favourite[];
+
+  @OneToMany(() => WashHistory, (wh) => wh.user)
+  washHistory: WashHistory[];
 }
