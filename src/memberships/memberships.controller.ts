@@ -1,8 +1,9 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
 import { MembershipsService } from './memberships.service';
 import { CreateMembershipDto } from './dto/create-membership.dto';
 import { Membership } from './entities/membership.entity';
-
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+@UseGuards(JwtAuthGuard)
 @Controller('memberships')
 export class MembershipsController {
   constructor(private readonly svc: MembershipsService) {}

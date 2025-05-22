@@ -1,7 +1,17 @@
-import { Controller, Post, Get, Delete, Param, Body } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Delete,
+  Param,
+  Body,
+  UseGuards,
+} from '@nestjs/common';
 import { FavouritesService } from './favourites.service';
 import { CreateFavouriteDto } from './dto/create-favourite.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('favourites')
 export class FavouritesController {
   constructor(private readonly svc: FavouritesService) {}

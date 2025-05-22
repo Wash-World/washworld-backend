@@ -54,4 +54,8 @@ export class UsersService {
     const users = await this.usersRepo.find();
     return users.map(({ password, ...rest }) => rest);
   }
+
+  async findByEmail(email: string): Promise<User | null> {
+    return this.usersRepo.findOne({ where: { email } });
+  }
 }

@@ -27,7 +27,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   password: string;
 
-  @IsPhoneNumber()
+  @IsString()
   @IsNotEmpty()
   mobile_num: string;
 
@@ -35,7 +35,6 @@ export class CreateUserDto {
   @IsNotEmpty()
   carplate?: string;
 
-  @IsNumber()
   @IsNotEmpty()
   membership_id: number;
 

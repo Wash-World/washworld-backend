@@ -7,6 +7,7 @@ import { ServicesModule } from './services/services.module';
 import { FavouritesModule } from './favourites/favourites.module';
 import { WashHistoryModule } from './wash-history/wash-history.module';
 import { FeedbacksModule } from './feedbacks/feedbacks.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { FeedbacksModule } from './feedbacks/feedbacks.module';
     FavouritesModule,
     WashHistoryModule,
     FeedbacksModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

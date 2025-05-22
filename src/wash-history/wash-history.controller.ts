@@ -1,8 +1,9 @@
-import { Controller, Post, Get, Param, Body } from '@nestjs/common';
+import { Controller, Post, Get, Param, Body, UseGuards } from '@nestjs/common';
 import { WashHistoryService } from './wash-history.service';
 import { CreateWashHistoryDto } from './dto/create-wash-history.dto';
 import { WashHistory } from './entities/wash-history.entity';
-
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+@UseGuards(JwtAuthGuard)
 @Controller('washes')
 export class WashHistoryController {
   constructor(private readonly svc: WashHistoryService) {}

@@ -1,7 +1,8 @@
-import { Controller, Post, Get, Param, Body } from '@nestjs/common';
+import { Controller, Post, Get, Param, Body, UseGuards } from '@nestjs/common';
 import { FeedbacksService } from './feedbacks.service';
 import { CreateFeedbackDto } from './dto/create-feedback.dto';
-
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+@UseGuards(JwtAuthGuard)
 @Controller('feedbacks')
 export class FeedbacksController {
   constructor(private svc: FeedbacksService) {}

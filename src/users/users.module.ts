@@ -15,5 +15,6 @@ import { WashHistory } from 'src/wash-history/entities/wash-history.entity';
   ],
   providers: [UsersService],
   controllers: [UsersController],
+  exports: [UsersService],
 })
 export class UsersModule {}
