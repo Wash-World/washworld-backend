@@ -24,6 +24,7 @@ export class AuthService {
     email: string;
     membership: { plan: string };
   }) {
+    //Here we define what goes in our payoad
     const payload = {
       sub: user.id,
       email: user.email,
