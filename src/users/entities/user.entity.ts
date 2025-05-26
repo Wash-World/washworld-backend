@@ -5,6 +5,7 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 import { Membership } from '../../memberships/entities/membership.entity';
 import { Favourite } from '../../favourites/entities/favourite.entity';
@@ -39,9 +40,17 @@ export class User {
   @Column({ default: false })
   all_locations: boolean;
 
-  // @ManyToOne(() => PaymentInfo, { nullable: true, eager: true })
-  // @JoinColumn({ name: 'payment_info_id' })
-  // payment_info?: PaymentInfo;
+  @Column()
+  card_owner: string;
+
+  @Column()
+  card_number: string;
+
+  @Column()
+  expiry_date: string;
+
+  @Column()
+  cvv: string;
 
   // ← new relation to Membership
   @ManyToOne(() => Membership, { eager: true }) //eager: true loads the membership automatically when you fetch a user.

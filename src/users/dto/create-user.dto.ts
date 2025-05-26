@@ -7,6 +7,8 @@ import {
   IsEnum,
   IsNumber,
   IsBoolean,
+  ValidateIf,
+  ValidateNested,
 } from 'class-validator';
 import { MembershipPlan } from '../../memberships/entities/membership.entity';
 
@@ -38,20 +40,31 @@ export class CreateUserDto {
   @IsNotEmpty()
   membership_id: number;
 
-  //@ValidateIf(o => !o.all_locations)
-  // @IsString()
-  // @IsNotEmpty()
-  // assigned_location_api_id?: string;
-
-  // @ValidateIf(o => !o.assigned_location_api_id)
-  // @IsBoolean()
-  //all_locations?: boolean;
+  @IsString()
+  @IsNotEmpty()
+  card_owner: string;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
+  card_number: string;
+
+  @IsString()
+  @IsNotEmpty()
+  expiry_date: string;
+
+  @IsString()
+  @IsNotEmpty()
+  cvv: string;
+
+  // If they did NOT choose “all_locations”, then assigned_location_api_id is required
+  @ValidateIf((o) => !o.all_locations)
+  @IsString()
+  @IsNotEmpty()
   assigned_location_api_id?: string;
 
+  // If they did NOT pick a specific location, then all_locations must be set
+  @ValidateIf((o) => !o.assigned_location_api_id)
   @IsBoolean()
-  @IsOptional()
+  @IsNotEmpty()
   all_locations?: boolean;
 }
