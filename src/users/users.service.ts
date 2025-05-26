@@ -17,9 +17,8 @@ export class UsersService {
     private readonly membershipsRepo: Repository<Membership>,
   ) {}
 
-  /**
-   * Create a new user with a membership.
-   */
+  // Create a new user with a membership.
+
   async create(dto: CreateUserDto): Promise<User> {
     // 1) Lookup the selected membership
     const membership = await this.membershipsRepo.findOne({

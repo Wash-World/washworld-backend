@@ -40,16 +40,16 @@ export class User {
   @Column({ default: false })
   all_locations: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   card_owner: string;
 
-  @Column()
+  @Column({ nullable: true })
   card_number: string;
 
-  @Column()
+  @Column({ nullable: true })
   expiry_date: string;
 
-  @Column()
+  @Column({ nullable: true })
   cvv: string;
 
   // ← new relation to Membership
