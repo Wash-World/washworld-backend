@@ -31,7 +31,7 @@ export class Membership {
   @Column({ type: 'int' })
   duration_wash: number; // minutes the wash lasts
 
-  @ManyToMany(() => Service, { eager: true }) //eager: true loads the membership automatically when you fetch a user.
+  @ManyToMany(() => Service, { eager: true })
   @JoinTable({
     name: 'membership_service', // Name of the join table in the database
     // Defines how this side (Membership) maps into the join table

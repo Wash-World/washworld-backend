@@ -3,7 +3,7 @@ import { ServicesService } from './services.service';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { Service } from './entities/service.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-@UseGuards(JwtAuthGuard)
+
 @Controller('services')
 export class ServicesController {
   constructor(private readonly servicesService: ServicesService) {}

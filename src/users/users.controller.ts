@@ -1,8 +1,8 @@
 // src/users/users.controller.ts
-import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { User } from './entities/user.entity';
+import { UserResponseDto } from './dto/user-response.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('users')
@@ -11,19 +11,22 @@ export class UsersController {
 
   /**
    * POST /users
+   * Now returns UserResponseDto, which never includes card_* or password.
    */
   @Post()
-  async create(@Body() dto: CreateUserDto): Promise<Omit<User, 'password'>> {
-    const user = await this.usersService.create(dto);
-    // Strip out password before returning
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...rest } = user;
-    return rest;
+  async create(@Body() dto: CreateUserDto): Promise<UserResponseDto> {
+    return this.usersService.create(dto);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  findAll(): Promise<Omit<User, 'password'>[]> {
+  async findAll(): Promise<UserResponseDto[]> {
     return this.usersService.findAll();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<UserResponseDto> {
+    return this.usersService.findOne(+id);
   }
 }
