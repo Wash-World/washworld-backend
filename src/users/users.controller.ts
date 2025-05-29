@@ -1,10 +1,26 @@
 // src/users/users.controller.ts
-import { Controller, Post, Body, Get, Param, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Request as ExpressRequest } from 'express';
 
+interface AuthRequest extends ExpressRequest {
+  user: {
+    userId: number;
+    email: string;
+    plan: string;
+  };
+}
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -28,5 +44,10 @@ export class UsersController {
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<UserResponseDto> {
     return this.usersService.findOne(+id);
+  }
+  @Get('profile')
+  @UseGuards(JwtAuthGuard)
+  async getProfile(@Request() req: AuthRequest) {
+    return this.usersService.findOne(req.user.userId);
   }
 }
