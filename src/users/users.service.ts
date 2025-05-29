@@ -82,7 +82,18 @@ export class UsersService {
   async findByEmail(email: string): Promise<User | null> {
     return this.usersRepo.findOne({
       where: { email },
-      select: ['id', 'email', 'password'],
+      select: [
+        'id',
+        'email',
+        'password',
+        'name',
+        'lastname',
+        'mobile_num',
+        'carplate',
+        'assigned_location_api_id',
+        'all_locations',
+      ],
+      relations: ['membership'], // 👈 make sure to include this!
     });
   }
 
@@ -90,7 +101,7 @@ export class UsersService {
    * Helper to map a User entity to UserResponseDto,
    * selecting only the whitelisted fields.
    */
-  private toResponseDto(user: User): UserResponseDto {
+  public toResponseDto(user: User): UserResponseDto {
     return {
       id: user.id,
       name: user.name,
@@ -100,7 +111,7 @@ export class UsersService {
       carplate: user.carplate,
       assigned_location_api_id: user.assigned_location_api_id,
       all_locations: user.all_locations,
-      membership_plan: user.membership.plan, // membership was eager-loaded
+      membership_plan: user.membership.plan, // make sure membership is loaded!
     };
   }
 }
