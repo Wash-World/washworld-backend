@@ -28,6 +28,7 @@ export class WashHistoryService {
   findAllForUser(user_id: number): Promise<WashHistory[]> {
     return this.historyRepo.find({
       where: { user: { id: user_id } },
+      relations: ['feedbacks'],
       order: { timestamp: 'DESC' },
     });
   }
