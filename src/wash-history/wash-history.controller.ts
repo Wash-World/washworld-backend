@@ -8,14 +8,14 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class WashHistoryController {
   constructor(private readonly svc: WashHistoryService) {}
 
-  /** POST /washes */
+  //POST
   @Post()
   async create(@Body() dto: CreateWashHistoryDto): Promise<WashHistory> {
     console.log('🛠  create WashHistory DTO:', dto);
     return this.svc.create(dto);
   }
 
-  /** GET /washes/user/:userId */
+  //GET
   @Get('user/:userId')
   findAll(@Param('userId') userId: string): Promise<WashHistory[]> {
     return this.svc.findAllForUser(+userId);
