@@ -15,11 +15,9 @@ export class WashHistoryService {
   ) {}
 
   async create(dto: CreateWashHistoryDto): Promise<WashHistory> {
-    // 1) Verify the user exists
     const user = await this.userRepo.findOne({ where: { id: dto.user_id } });
     if (!user) throw new NotFoundException('User not found');
 
-    // 2) Create & save the history record
     const record = this.historyRepo.create({
       user,
       location_api_id: dto.location_api_id,
@@ -30,6 +28,7 @@ export class WashHistoryService {
   findAllForUser(user_id: number): Promise<WashHistory[]> {
     return this.historyRepo.find({
       where: { user: { id: user_id } },
+      relations: ['feedbacks'],
       order: { timestamp: 'DESC' },
     });
   }

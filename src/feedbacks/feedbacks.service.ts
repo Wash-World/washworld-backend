@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Feedback } from './entities/feedback.entity';
 import { CreateFeedbackDto } from './dto/create-feedback.dto';
 import { WashHistory } from '../wash-history/entities/wash-history.entity';
+import { UpdateFeedbackDto } from './dto/update-feedback.dto';
 
 @Injectable()
 export class FeedbacksService {
@@ -26,6 +27,15 @@ export class FeedbacksService {
       comment: dto.comment,
       photo: dto.photo,
     });
+    return this.fbRepo.save(fb);
+  }
+  async update(feedbackId: number, dto: UpdateFeedbackDto): Promise<Feedback> {
+    const fb = await this.fbRepo.findOne({
+      where: { feedback_id: feedbackId },
+    });
+    if (!fb) throw new NotFoundException('Feedback not found');
+
+    Object.assign(fb, dto);
     return this.fbRepo.save(fb);
   }
 

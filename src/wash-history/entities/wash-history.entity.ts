@@ -15,7 +15,6 @@ export class WashHistory {
   @PrimaryGeneratedColumn()
   wash_history_id: number;
 
-  /** Link back to the user who requested the wash */
   @ManyToOne(() => User, (user) => user.washHistory, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user: User;
@@ -24,7 +23,7 @@ export class WashHistory {
   @Column()
   location_api_id: string;
 
-  /** Timestamp when the record was created */
+  /** Automatically set when saved */
   @CreateDateColumn({ type: 'timestamp' })
   timestamp: Date;
 
