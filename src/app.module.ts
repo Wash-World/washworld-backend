@@ -8,12 +8,15 @@ import { FavouritesModule } from './favourites/favourites.module';
 import { WashHistoryModule } from './wash-history/wash-history.module';
 import { FeedbacksModule } from './feedbacks/feedbacks.module';
 import { AuthModule } from './auth/auth.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
     // Load .env and make ConfigService available everywhere
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
     }),
 
     // Configure TypeORM using values from process.env
@@ -41,5 +44,7 @@ import { AuthModule } from './auth/auth.module';
     FeedbacksModule,
     AuthModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
