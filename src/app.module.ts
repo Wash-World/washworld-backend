@@ -1,3 +1,4 @@
+// src/app.module.ts
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -8,6 +9,7 @@ import { FavouritesModule } from './favourites/favourites.module';
 import { WashHistoryModule } from './wash-history/wash-history.module';
 import { FeedbacksModule } from './feedbacks/feedbacks.module';
 import { AuthModule } from './auth/auth.module';
+import { HelpModule } from './help/help.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -35,7 +37,6 @@ import { AppService } from './app.service';
       inject: [ConfigService],
     }),
 
-    // Your feature modules here
     UsersModule,
     MembershipsModule,
     ServicesModule,
@@ -43,6 +44,7 @@ import { AppService } from './app.service';
     WashHistoryModule,
     FeedbacksModule,
     AuthModule,
+    HelpModule,
   ],
   controllers: [AppController],
   providers: [AppService],

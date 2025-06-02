@@ -100,6 +100,7 @@ export class UsersService {
   /**
    * Helper to map a User entity to UserResponseDto,
    * selecting only the whitelisted fields.
+   * this is a function!!!!!!
    */
   public toResponseDto(user: User): UserResponseDto {
     return {
