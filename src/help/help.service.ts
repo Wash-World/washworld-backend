@@ -12,12 +12,12 @@ export class HelpService {
         },
         {
           question: 'How do I contact support?',
-          answer: 'Email us at support@washworld.com or call +1-800-123-WASH.',
+          answer: 'Email us at support@washworld.com or call 123456.',
         },
       ],
       contact: {
         email: 'support@washworld.com',
-        phone: '+1-800-123-WASH',
+        phone: '123456',
       },
     };
   }
