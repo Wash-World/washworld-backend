@@ -1,5 +1,3 @@
-// test/users.e2e-spec.ts
-
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
@@ -15,7 +13,6 @@ describe('UsersController (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
 
-    // Enable global validation pipe to match your main.ts config
     app.useGlobalPipes(
       new ValidationPipe({
         whitelist: true,
@@ -41,14 +38,19 @@ describe('UsersController (e2e)', () => {
         password: 'RohanStrong!',
         mobile_num: '11223344',
         carplate: 'R0HAN',
-        membership_id: 1, // this must exist in test DB
+        membership_id: 1,
         card_owner: 'Eowyn Shieldmaiden',
         card_number: '1234567890123456',
         expiry_date: '12/30',
         cvv: '123',
-      })
-      .expect(201);
+        assigned_location_api_id: 'dk-roskilde-01', 
+        all_locations: false, 
+      });
 
+    console.log('❗ RESPONSE STATUS:', response.status);
+    console.log('❗ RESPONSE BODY:', JSON.stringify(response.body, null, 2));
+
+    expect(response.status).toBe(201);
     expect(response.body).toEqual(
       expect.objectContaining({
         id: expect.any(Number),
@@ -57,7 +59,7 @@ describe('UsersController (e2e)', () => {
         email: 'eowyn@lotr.com',
       }),
     );
-
-    expect(response.body.password).toBeUndefined();
+    expect((response.body as any).password).toBeUndefined();
   });
 });
+
