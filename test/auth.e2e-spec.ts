@@ -20,7 +20,6 @@ describe('AuthController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     await app.init();
 
-    // Get the TypeORM DataSource instance to manipulate DB directly
     dataSource = moduleFixture.get<DataSource>(getDataSourceToken());
   });
 
@@ -34,24 +33,28 @@ describe('AuthController (e2e)', () => {
   });
 
   it('/auth/login (POST) - login without pre-creating user should fail', async () => {
+    // Arrange
     const loginDto = {
       email: 'nonexistent@example.com',
       password: 'wrongpassword',
     };
 
     await request(app.getHttpServer())
+      // Act
       .post('/auth/login')
       .send(loginDto)
+
+      // Assert
       .expect(401); // Unauthorized, since user does not exist
   });
 
   it('/auth/login (POST) - create user first, then login', async () => {
+    // Arrange
     const loginDto = {
       email: testUserEmail,
       password: 'correct_password',
     };
 
-    // Create the user
     await request(app.getHttpServer())
       .post('/users')
       .send({
@@ -71,12 +74,13 @@ describe('AuthController (e2e)', () => {
       })
       .expect(201);
 
-    // Then login
+    // Act
     await request(app.getHttpServer())
       .post('/auth/login')
       .send(loginDto)
       .expect(201)
       .expect((res) => {
+        // Assert
         expect(res.body).toHaveProperty('access_token');
         expect(typeof res.body.access_token).toBe('string');
         expect(res.body).toHaveProperty('user');
