@@ -32,7 +32,7 @@ import { AppService } from './app.service';
         password: config.get<string>('DATABASE_PASSWORD'),
         database: config.get<string>('DATABASE_NAME'),
         autoLoadEntities: true, // picks up all @Entity() classes
-        synchronize: true, // dev only! auto-creates/migrates tables
+        synchronize: false, // dev only! auto-creates/migrates tables
       }),
       inject: [ConfigService],
     }),

@@ -24,6 +24,9 @@ export class User {
   @Column({ unique: true })
   email: string;
 
+  @Column({ type: 'int', nullable: true }) // safe and non-breaking
+  age?: number;
+
   // never load the password by default
   @Column({ select: false })
   password: string;
