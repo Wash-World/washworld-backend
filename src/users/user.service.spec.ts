@@ -5,16 +5,16 @@ import { UsersService } from './users.service';
 import { Membership, MembershipPlan } from 'src/memberships/entities/membership.entity';
 import { User } from './entities/user.entity';
 
-
 describe('UsersService', () => {
   // Repositories with correct mock function types
-  let usersRepo: { save: jest.Mock };
+  let usersRepo: { create: jest.Mock; save: jest.Mock }; // <-- Added create
   let membershipsRepo: { findOne: jest.Mock };
   let service: UsersService;
 
   beforeEach(() => {
     // ------------------- ARRANGE -------------------
     usersRepo = {
+      create: jest.fn(), // <-- Added mock create function
       save: jest.fn(),
     };
 
@@ -58,24 +58,24 @@ describe('UsersService', () => {
     jest.spyOn(bcrypt, 'hash').mockResolvedValue(hashedPassword);
 
     const mockUser: User = {
-    id: 1,
-    name: dto.name,
-    lastname: dto.lastname,
-    email: dto.email,
-    password: hashedPassword,
-    mobile_num: dto.mobile_num,
-    carplate: dto.carplate,
-    membership: mockMembership,
-    favourites: [],
-    washHistory: [],
-    all_locations: false,
-    card_owner: '',
-    card_number: '',
-    expiry_date: '',
-    cvv: '',
+      id: 1,
+      name: dto.name,
+      lastname: dto.lastname,
+      email: dto.email,
+      password: hashedPassword,
+      mobile_num: dto.mobile_num,
+      carplate: dto.carplate,
+      membership: mockMembership,
+      favourites: [],
+      washHistory: [],
+      all_locations: false,
+      card_owner: '',
+      card_number: '',
+      expiry_date: '',
+      cvv: '',
     };
 
-
+    usersRepo.create.mockReturnValue(mockUser); // <-- Added create return
     usersRepo.save.mockResolvedValue(mockUser);
 
     // ------------------- ACT -------------------
